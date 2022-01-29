@@ -6,9 +6,7 @@ import { ClientModule } from "./client/client.module";
   imports: [
     ClientModule,
     GraphQLModule.forRoot({
-      subscriptions: {
-        "graphql-ws": true,
-      },
+      installSubscriptionHandlers: true,
       autoSchemaFile: "schema.gql",
     }),
   ],

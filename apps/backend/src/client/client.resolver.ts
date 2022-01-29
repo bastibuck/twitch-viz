@@ -1,11 +1,22 @@
-import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import {
+  Args,
+  Int,
+  Mutation,
+  Query,
+  Resolver,
+  Subscription,
+} from "@nestjs/graphql";
 import { PubSub } from "graphql-subscriptions";
 
 import { Client } from "./client.model";
 import { ClientService } from "./client.service";
-import { NewClientInput, PingClientInput } from "./client.input";
+import {
+  NewClientInput,
+  PingClientInput,
+  SubscriptionClientInput,
+} from "./client.input";
 
-const pubSub = new PubSub();
+export const pubSub = new PubSub();
 
 @Resolver((of) => Client)
 export class ClientResolver {
@@ -26,5 +37,16 @@ export class ClientResolver {
     const client = await this.clientService.create(addChatInput);
 
     return client;
+  }
+
+  @Subscription((returns) => Int, {
+    filter: (payload, variables) =>
+      payload.clientId === variables.subscriptionClientInput.clientId,
+  })
+  messageCount(
+    @Args("subscriptionClientInput")
+    subscriptionClientInput: SubscriptionClientInput,
+  ) {
+    return pubSub.asyncIterator("messageCount");
   }
 }

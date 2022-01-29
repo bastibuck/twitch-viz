@@ -3,6 +3,7 @@ import * as tmi from "tmi.js";
 
 import { NewClientInput } from "./client.input";
 import { Client } from "./client.model";
+import { pubSub } from "./client.resolver";
 
 const CHECK_ACTIVE_INTERVAL = 1000 * 60 * 2;
 const INACTIVE_TIME = 1000 * 60 * 5;
@@ -33,6 +34,8 @@ export class ClientService {
   }
 
   async create(data: NewClientInput): Promise<Client> {
+    const client = new Client(data);
+
     const TMI = new tmi.Client({
       channels: [data.channelName],
     });
@@ -41,9 +44,12 @@ export class ClientService {
 
     TMI.on("message", (channel, tags, message, self) => {
       console.log(`${tags["display-name"]}: ${message}`);
-    });
 
-    const client = new Client(data);
+      pubSub.publish("messageCount", {
+        clientId: client.id,
+        messageCount: message.length,
+      });
+    });
 
     const interval = setInterval(() => {
       const activeClient = this.activeClients.find(

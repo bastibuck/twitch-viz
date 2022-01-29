@@ -14,3 +14,10 @@ export class PingClientInput {
   @IsUUID(4)
   clientId: string;
 }
+
+@InputType()
+export class SubscriptionClientInput {
+  @Field()
+  @IsUUID(4)
+  clientId: string;
+}

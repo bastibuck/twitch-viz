@@ -21,3 +21,11 @@ type Mutation {
 input NewClientInput {
   channelName: String!
 }
+
+type Subscription {
+  messageCount(subscriptionClientInput: SubscriptionClientInput!): Int!
+}
+
+input SubscriptionClientInput {
+  clientId: String!
+}
