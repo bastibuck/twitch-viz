@@ -5,14 +5,19 @@ import { Client } from "./client.model";
 
 @Injectable()
 export class ClientService {
-  async isClientActive(clientId: string): Promise<boolean> {
-    console.log("checking if clientID is actively monitored... " + clientId);
+  private activeClients: { id: string; lastPing: number }[] = [];
 
-    return Math.random() > 0.5;
+  async isClientActive(clientId: string): Promise<boolean> {
+    return this.activeClients.some((client) => client.id === clientId);
   }
 
   async create(data: NewClientInput): Promise<Client> {
     const client = new Client(data);
+
+    this.activeClients.push({
+      id: client.id,
+      lastPing: client.lastPing.valueOf(),
+    });
 
     return client;
   }
