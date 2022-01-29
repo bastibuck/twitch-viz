@@ -1,0 +1,23 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Client {
+  id: String!
+}
+
+type Query {
+  ping(pingClientInput: PingClientInput!): Boolean!
+}
+
+input PingClientInput {
+  clientId: String!
+}
+
+type Mutation {
+  addChat(addChatInput: NewClientInput!): Client!
+}
+
+input NewClientInput {
+  channelName: String!
+}
