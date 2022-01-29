@@ -22,6 +22,7 @@ export class ClientResolver {
   async addChat(
     @Args("addChatInput") addChatInput: NewClientInput,
   ): Promise<Client> {
+    // TODO! validate input to be valid twitch channel
     const client = await this.clientService.create(addChatInput);
 
     return client;
