@@ -12,6 +12,23 @@ export class Client {
     this.channelName = data.channelName;
     this.createdAt = now;
     this.lastPing = now;
+
+    this.totalMessages = 0;
+    this.modMessages = 0;
+    this.subMessages = 0;
+    this.userMessages = 0;
+
+    this.withouEmojiMessages = 0;
+    this.withEmojiMessages = 0;
+    this.emoteOnlyMessages = 0;
+
+    this.firstTimers = 0;
+
+    this.replyMessages = 0;
+
+    this.activeChatUsers = new Set();
+
+    this.totalMessagesLength = 0;
   }
 
   @Field()
@@ -22,4 +39,22 @@ export class Client {
   readonly createdAt: Date;
 
   lastPing: Date;
+
+  // viz data
+  totalMessages: number;
+  modMessages: number;
+  subMessages: number;
+  userMessages: number;
+
+  withouEmojiMessages: number;
+  withEmojiMessages: number;
+  emoteOnlyMessages: number;
+
+  firstTimers: number; // number of users who commented the first time in this channel in this session
+
+  replyMessages: number;
+
+  activeChatUsers: Set<string>;
+
+  totalMessagesLength: number;
 }

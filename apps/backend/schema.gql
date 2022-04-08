@@ -6,6 +6,20 @@ type Client {
   id: String!
 }
 
+type VizData {
+  totalMessages: Int!
+  modMessages: Int!
+  subMessages: Int!
+  userMessages: Int!
+  withouEmojiMessages: Int!
+  withEmojiMessages: Int!
+  emoteOnlyMessages: Int!
+  firstTimers: Int!
+  replyMessages: Int!
+  activeChatUsers: Int!
+  averageMessageLength: Int!
+}
+
 type Query {
   ping(pingClientInput: PingClientInput!): Boolean!
 }
@@ -23,7 +37,7 @@ input NewClientInput {
 }
 
 type Subscription {
-  messageCount(subscriptionClientInput: SubscriptionClientInput!): Int!
+  vizData(subscriptionClientInput: SubscriptionClientInput!): VizData!
 }
 
 input SubscriptionClientInput {
