@@ -23,6 +23,10 @@ export const useVizData = (clientId) => {
   });
 
   useEffect(() => {
+    if (!clientId) {
+      return;
+    }
+
     const ws = new WebSocket(url, "graphql-ws");
 
     ws.onopen = () => {

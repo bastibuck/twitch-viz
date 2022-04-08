@@ -25,6 +25,11 @@ export const usePingClient: (
         }
       `;
 
+      // kinda wrong, but ... we don't want to show the session end modal either
+      if (!clientId) {
+        return true;
+      }
+
       const res = await graphQLClient.request(query, { input: { clientId } });
 
       return res.ping;
