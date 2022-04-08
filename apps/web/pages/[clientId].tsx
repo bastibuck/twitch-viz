@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { VictoryLabel, VictoryPie } from "victory";
+
 import { usePingClient } from "../graphql/hooks/channel";
 import { useVizData } from "../graphql/hooks/useVizData";
 
@@ -13,7 +15,16 @@ const ChannelVizPage = () => {
 
   const { data: isClientActive, isLoading, isError } = usePingClient(clientId);
 
-  const vizData = useVizData(clientId);
+  const {
+    totalMessages,
+    modMessages,
+    subMessages,
+    userMessages,
+    emojiOnlyMessages,
+    withEmojiMessages,
+    withoutEmojiMessages,
+    ...vizData
+  } = useVizData(clientId);
 
   if (isLoading) {
     return "Loading";
@@ -25,22 +36,79 @@ const ChannelVizPage = () => {
 
   return (
     <>
-      <h1>DATA VIZ</h1>
+      <h1>Twitch Viz</h1>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          rowGap: 10,
-          maxWidth: 550,
-        }}
-      >
-        {Object.entries(vizData).map(([key, value]) => (
-          <React.Fragment key={key}>
-            <div>{key}</div>
-            <div>{value}</div>
-          </React.Fragment>
-        ))}
+      <table role="grid">
+        <tbody>
+          {Object.entries(vizData).map(([key, value]) => (
+            <tr key={key}>
+              <td>{key}</td>
+              <td>{value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div className="grid">
+        <svg viewBox="0 0 400 400">
+          <VictoryPie
+            standalone={false}
+            width={400}
+            height={400}
+            data={[
+              { x: 1, y: modMessages, label: "Mods" },
+              { x: 2, y: subMessages, label: "Subs" },
+              { x: 3, y: userMessages, label: "Users" },
+            ]}
+            colorScale={["#AAA1C8", "#967AA1", "#D5C6E0"]}
+            innerRadius={85}
+            labelRadius={({ innerRadius }) => (innerRadius as number) + 17}
+            labelPlacement="parallel"
+            style={{
+              labels: { fill: "white", fontWeight: "bold" },
+            }}
+            padAngle={1}
+          />
+          <VictoryLabel
+            textAnchor="middle"
+            style={[
+              { fill: "inherit", fontSize: 20 },
+              { fill: "inherit", fontSize: 40 },
+            ]}
+            lineHeight={1.1}
+            x={200}
+            y={180}
+            text={["Total messages:", totalMessages.toString()]}
+          />
+        </svg>
+
+        <svg viewBox="0 0 400 400">
+          <VictoryPie
+            standalone={false}
+            width={400}
+            height={400}
+            data={[
+              { x: 1, y: emojiOnlyMessages, label: "Only" },
+              { x: 2, y: withEmojiMessages, label: "With" },
+              { x: 3, y: userMessages, label: "No" },
+            ]}
+            colorScale={["#AAA1C8", "#967AA1", "#D5C6E0"]}
+            innerRadius={85}
+            labelRadius={({ innerRadius }) => (innerRadius as number) + 17}
+            labelPlacement="parallel"
+            style={{
+              labels: { fill: "white", fontWeight: "bold" },
+            }}
+            padAngle={1}
+          />
+          <VictoryLabel
+            textAnchor="middle"
+            style={{ fontSize: 20, fill: "inherit" }}
+            x={200}
+            y={200}
+            text={"Emojis"}
+          />
+        </svg>
       </div>
 
       {isClientActive === false ? (
