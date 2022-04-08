@@ -62,9 +62,9 @@ export class ClientService {
 
       // message types
       if (tags["emote-only"]) {
-        client.emoteOnlyMessages = client.emoteOnlyMessages + 1;
+        client.emojiOnlyMessages = client.emojiOnlyMessages + 1;
       } else if (tags.emotes === null) {
-        client.withouEmojiMessages = client.withEmojiMessages + 1;
+        client.withoutEmojiMessages = client.withoutEmojiMessages + 1;
       } else if (Object.keys(tags.emotes).length > 0) {
         client.withEmojiMessages = client.withEmojiMessages + 1;
       }
@@ -91,9 +91,9 @@ export class ClientService {
         subMessages: client.subMessages,
         userMessages: client.userMessages,
 
-        withouEmojiMessages: client.withouEmojiMessages,
+        withoutEmojiMessages: client.withoutEmojiMessages,
         withEmojiMessages: client.withEmojiMessages,
-        emoteOnlyMessages: client.emoteOnlyMessages,
+        emojiOnlyMessages: client.emojiOnlyMessages,
 
         firstTimers: client.firstTimers,
 

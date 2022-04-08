@@ -18,9 +18,9 @@ export class Client {
     this.subMessages = 0;
     this.userMessages = 0;
 
-    this.withouEmojiMessages = 0;
+    this.withoutEmojiMessages = 0;
     this.withEmojiMessages = 0;
-    this.emoteOnlyMessages = 0;
+    this.emojiOnlyMessages = 0;
 
     this.firstTimers = 0;
 
@@ -46,9 +46,9 @@ export class Client {
   subMessages: number;
   userMessages: number;
 
-  withouEmojiMessages: number;
+  withoutEmojiMessages: number;
   withEmojiMessages: number;
-  emoteOnlyMessages: number;
+  emojiOnlyMessages: number;
 
   firstTimers: number; // number of users who commented the first time in this channel in this session
 

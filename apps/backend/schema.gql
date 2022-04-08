@@ -11,9 +11,9 @@ type VizData {
   modMessages: Int!
   subMessages: Int!
   userMessages: Int!
-  withouEmojiMessages: Int!
+  withoutEmojiMessages: Int!
   withEmojiMessages: Int!
-  emoteOnlyMessages: Int!
+  emojiOnlyMessages: Int!
   firstTimers: Int!
   replyMessages: Int!
   activeChatUsers: Int!

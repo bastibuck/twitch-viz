@@ -35,13 +35,13 @@ export class VizData {
   readonly userMessages: number;
 
   @Field((type) => Int)
-  withouEmojiMessages: number;
+  withoutEmojiMessages: number;
 
   @Field((type) => Int)
   withEmojiMessages: number;
 
   @Field((type) => Int)
-  emoteOnlyMessages: number;
+  emojiOnlyMessages: number;
 
   @Field((type) => Int)
   firstTimers: number; // number of users who commented the first time in this channel in this session
