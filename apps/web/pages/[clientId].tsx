@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
+import React from "react";
 import { usePingClient } from "../graphql/hooks/channel";
+import { useVizData } from "../graphql/hooks/useVizData";
 
 const ChannelVizPage = () => {
   const router = useRouter();
@@ -9,7 +11,9 @@ const ChannelVizPage = () => {
     throw new Error("Falsy client ID");
   }
 
-  const { data, isLoading, isError } = usePingClient(clientId);
+  const { data: isClientActive, isLoading, isError } = usePingClient(clientId);
+
+  const vizData = useVizData(clientId);
 
   if (isLoading) {
     return "Loading";
@@ -23,7 +27,23 @@ const ChannelVizPage = () => {
     <>
       <h1>DATA VIZ</h1>
 
-      {data === false ? (
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          rowGap: 10,
+          maxWidth: 550,
+        }}
+      >
+        {Object.entries(vizData).map(([key, value]) => (
+          <React.Fragment key={key}>
+            <div>{key}</div>
+            <div>{value}</div>
+          </React.Fragment>
+        ))}
+      </div>
+
+      {isClientActive === false ? (
         <div
           style={{
             background: "rgba(0,0,0,0.5)",
